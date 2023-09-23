@@ -2,7 +2,7 @@
 
 set -o pipefail -eu
 
-if [ -z "$1" ]; then
+if [ -z "${1:-}" ]; then
     echo "Usage: aplcnf <shard>"
     exit
 fi
@@ -37,8 +37,8 @@ download_and_verify() {
     echo "$sha256  $TMPDIR/cache/$filename" | sha256sum -c -
 }
 
-if [ -e "$APLCNF_SHARDS_PATH/$1" ]; then
-    . "$APLCNF_SHARDS_PATH/$1"
+if [ -e "$APLCNF_SHARDS_PATH/${1:-}" ]; then
+    . "$APLCNF_SHARDS_PATH/${1:-}"
 else
     echo "Shard not found"
 fi
