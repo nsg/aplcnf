@@ -27,6 +27,12 @@ else
         rm -rf $TMPDIR
         exec "$0" $@
     fi
+
+    mkdir -p /etc/aplcnf.d/
+    chown -R root:root /etc/aplcnf.d/
+    chmod -R 700 /etc/aplcnf.d/
+
+    . /etc/aplcnf.d/*.conf
 fi
 
 download_and_verify() {
