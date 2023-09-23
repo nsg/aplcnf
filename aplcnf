@@ -24,6 +24,7 @@ else
     if ! cmp -s "$0" "$TMPDIR/aplcnf/aplcnf"; then
         echo "Press enter to updating aplcnf and re-execute the new script! "; read
         cp "$TMPDIR/aplcnf/aplcnf" "$0"
+        rm -rf $TMPDIR
         exec "$0" $@
     fi
 fi
