@@ -17,7 +17,7 @@ elif [ "$EUID" -ne 0 ]; then
     echo "Please run as root"
     exit
 else
-    APLCNF_REPO_URL="TODO"
+    APLCNF_REPO_URL="https://github.com/nsg/aplcnf.git"
     git clone --depth 1 "$APLCNF_REPO_URL" "$TMPDIR/aplcnf"
     APLCNF_SHARDS_PATH="$TMPDIR/aplcnf/shards"
 fi
