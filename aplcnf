@@ -1,9 +1,38 @@
 #!/bin/bash
 
-APLCNF_REPO_URL="$PWD"
+set -o pipefail -eu
+
+if [ -z "$1" ]; then
+    echo "Usage: aplcnf <shard>"
+    exit
+fi
 
 TMPDIR=$(mktemp -d)
+mkdir -p $TMPDIR/cache
 trap "rm -rf $TMPDIR" EXIT
 
-echo "Cloning aplcnf repo..."
-git clone --depth 1 "$APLCNF_REPO_URL" "$TMPDIR/aplcnf"
+if [ -d "$PWD/.git" ]; then
+    APLCNF_SHARDS_PATH="$PWD/shards"
+elif [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit
+else
+    APLCNF_REPO_URL="TODO"
+    git clone --depth 1 "$APLCNF_REPO_URL" "$TMPDIR/aplcnf"
+    APLCNF_SHARDS_PATH="$TMPDIR/aplcnf/shards"
+fi
+
+download_and_verify() {
+    local url="$1"
+    local sha256="$2"
+    local filename="$3"
+
+    wget -c "$url" -O "$TMPDIR/cache/$filename"
+    echo "$sha256  $TMPDIR/cache/$filename" | sha256sum -c -
+}
+
+if [ -e "$APLCNF_SHARDS_PATH/$1" ]; then
+    . "$APLCNF_SHARDS_PATH/$1"
+else
+    echo "Shard not found"
+fi
