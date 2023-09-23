@@ -20,6 +20,12 @@ else
     APLCNF_REPO_URL="https://github.com/nsg/aplcnf.git"
     git clone --depth 1 "$APLCNF_REPO_URL" "$TMPDIR/aplcnf"
     APLCNF_SHARDS_PATH="$TMPDIR/aplcnf/shards"
+
+    if ! cmp -s "$0" "$TMPDIR/aplcnf/aplcnf"; then
+        echo "Press enter to updating aplcnf and re-execute the new script! "; read
+        cp "$TMPDIR/aplcnf/aplcnf" "$0"
+        exec "$0" $@
+    fi
 fi
 
 download_and_verify() {
