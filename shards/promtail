@@ -5,4 +5,4 @@ PROMTAIL_SHA256="462365252e62640619b798c95a3ae35f71a795150b95b2e2c9549054e65ff20
 PROMTAIL_PATH="https://github.com/grafana/loki/releases/download/v${PROMTAIL_VERSION}/promtail_${PROMTAIL_VERSION}_amd64.deb"
 
 download_and_verify $PROMTAIL_PATH $PROMTAIL_SHA256 "promtail_${PROMTAIL_VERSION}_amd64.deb"
-echo dpkg -i "$TMPDIR/cache/promtail_${PROMTAIL_VERSION}_amd64.deb"
+dpkg -i "$TMPDIR/cache/promtail_${PROMTAIL_VERSION}_amd64.deb"
