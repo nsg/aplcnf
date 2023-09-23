@@ -1,0 +1,9 @@
+#!/bin/bash
+
+APLCNF_REPO_URL="$PWD"
+
+TMPDIR=$(mktemp -d)
+trap "rm -rf $TMPDIR" EXIT
+
+echo "Cloning aplcnf repo..."
+git clone --depth 1 "$APLCNF_REPO_URL" "$TMPDIR/aplcnf"
